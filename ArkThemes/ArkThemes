@@ -14,13 +14,8 @@ source ./helper
 # Joystick controls
 #
 
-isitoga=$(dmesg | grep odroidgo2-joypad/input/input2)
-if [ ! -z "$isitoga" ]; then
-sudo ./oga_controls & > /dev/null 2>&1
-else
-sudo ./rg351_controls & > /dev/null 2>&1
-fi
-
+isitoga=$(dmesg | grep odroidgo2-joypad/input/input3)
+sudo /roms/ports/AnberPorts/bin/oga_controls ArkThemes & 
 function InstallTheme () {
 
 	for choice in $choices; do
@@ -59,9 +54,7 @@ function InstallTheme () {
 	if unzip -qt /dev/shm/theme_update_temp/update.zip | grep 'No errors detected';then
 		printf "\nUnzipping archive..."
 		sudo unzip -qo /dev/shm/theme_update_temp/update.zip -d /dev/shm/theme_update_temp/ #unzip directly in RAM
-		mkdir -p /roms/themes/$REP_NAME
-		printf "\nOverwritting existing files..."
-		cp -rf $THEME_CONTENT /roms/themes/$REP_NAME
+		cp -rf $THEME_CONTENT /etc/emulationstation/themes/$REP_NAME
 		printf "\nTheme $REP_NAME updated successfully."
 		sleep 3
 	else
